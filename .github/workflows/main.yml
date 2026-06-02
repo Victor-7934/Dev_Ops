@@ -23,4 +23,4 @@ jobs:
 
       # Lancement des tests. Maven va utiliser Testcontainers pour lever un conteneur PostgreSQL temporaire
       - name: Build and test with Maven
-        run: mvn clean verify --file ./simple-api/pom.xml # <-- Corrigé ici (pom.xml)
+       run: mvn clean verify --file ./TP1_docker/backend2/simpleapi/pom.xml
