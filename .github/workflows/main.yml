@@ -3,7 +3,7 @@ name: CI devops 2025
 on:
   push:
     branches:
-      - main
+      - master
       - develop
   pull_request:
 
@@ -39,18 +39,18 @@ jobs:
         with:
           context: ./TP1_docker/backend2/simpleapi
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Build image and push database
         uses: docker/build-push-action@v6
         with:
           context: ./TP1_docker/sql
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Build image and push httpd
         uses: docker/build-push-action@v6
         with:
           context: ./TP1_docker/http
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/master' }}
