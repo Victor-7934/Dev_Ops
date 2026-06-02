@@ -1,0 +1,49 @@
+services:
+
+  database:
+    build: ./TP1_docker
+    container_name: my3tierapp
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - my-db-volume:/var/lib/postgresql/data
+    networks:
+      - db-network
+
+  backend:
+    build: ./TP1_docker/backend2/simpleapi
+    container_name: ${BACKEND_CONTAINER_NAME}
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - database
+    networks:
+      - app-network
+      - db-network
+
+  httpd:
+    build: ./TP1_docker/http
+    container_name: httpd-server
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - BACKEND_HOST=${BACKEND_HOST}
+      - BACKEND_PORT=${BACKEND_PORT}
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+  db-network:
+    driver: bridge
+
+volumes:
+  my-db-volume:
