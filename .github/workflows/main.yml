@@ -3,14 +3,15 @@ name: CI devops 2025
 on:
   push:
     branches:
-      - master
+      - main
       - develop
   pull_request:
 
 jobs:
-  # MISSION 1 : Tester le code (CI)
+
   test-backend:
     runs-on: ubuntu-24.04
+
     steps:
       - uses: actions/checkout@v4
 
@@ -18,44 +19,38 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: 21
 
       - name: Build and test with Maven
         run: mvn clean verify --file ./TP1_docker/backend2/simpleapi/pom.xml
 
-  # MISSION 2 : Fabriquer et publier les images Docker (CD)
   build-and-push-docker-image:
-    needs: test-backend # Ne se lance que si les tests réussissent
+    needs: test-backend
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Connexion sécurisée au Docker Hub
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-      # Build et Push du BACKEND
       - name: Build image and push backend
         uses: docker/build-push-action@v6
         with:
           context: ./TP1_docker/backend2/simpleapi
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:latest
-          push: ${{ github.ref == 'refs/heads/master' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
 
-      # Build et Push de la BASE DE DONNÉES (Dossier 'sql')
       - name: Build image and push database
         uses: docker/build-push-action@v6
         with:
           context: ./TP1_docker/sql
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
-          push: ${{ github.ref == 'refs/heads/master' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
 
-      # Build et Push du SERVEUR HTTPD (Dossier 'http')
       - name: Build image and push httpd
         uses: docker/build-push-action@v6
         with:
           context: ./TP1_docker/http
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
-          push: ${{ github.ref == 'refs/heads/master' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
