@@ -87,3 +87,7 @@ Gestion des versions : Suivre et archiver l'historique du code grâce aux tags (
 # TP2
 
 ### 2-1 What are testcontainers?
+
+### 2-2 For what purpose do we need to use secured variables ?
+
+Les variables sécurisées (Secrets) servent à masquer et protéger des données sensibles (mots de passe, tokens, clés d'API). Elles permettent au pipeline d'utiliser ces informations sans jamais les afficher dans les logs ni les laisser visibles dans le code source du dépôt (ce qui serait un énorme risque de piratage).

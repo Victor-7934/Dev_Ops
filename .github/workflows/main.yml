@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 21   # installe les outils Java (JDK 21 Temurin) nécessaires pour comprendre ton projet.
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -22,3 +22,39 @@ jobs:
 
       - name: Build and test with Maven
         run: mvn clean verify --file ./TP1_docker/backend2/simpleapi/pom.xml
+
+
+      # MISSION 2 : Fabriquer et livrer les images Docker
+
+
+ # Définition du job pour construire et publier les images Docker
+  build-and-push-docker-image:
+    needs: test-backend # S'exécute uniquement si le code compile et que les tests réussissent
+    runs-on: ubuntu-24.04
+
+    # Liste des étapes à exécuter dans ce job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build image and push backend
+        uses: docker/build-push-action@v6
+        with:
+          # Chemin relatif vers le dossier où se trouve le code source avec son Dockerfile
+          context: ./TP1_docker/backend2/simpleapi
+          # Note : le nom des tags doit obligatoirement être écrit en minuscules
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
+
+      - name: Build image and push database
+        # Faire la même chose pour la base de données
+        uses: docker/build-push-action@v6
+        with:
+          context: ./TP1_docker/database
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-database:latest
+
+      - name: Build image and push httpd
+        # Faire la même chose pour le serveur HTTPD
+        uses: docker/build-push-action@v6
+        with:
+          context: ./TP1_docker/httpd
+          tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-httpd:latest
