@@ -21,7 +21,8 @@ jobs:
       - name: Clean and version
         run: |
           mvn -B clean \
-            --file ./backend/pom.xml
+            --file ./TP1_docker/backend2/simpleapi/pom.xml
+
       - name: Build, test and SonarCloud analysis
         run: |
           mvn -B verify sonar:sonar \
@@ -29,4 +30,4 @@ jobs:
             -Dsonar.organization=emilez10 \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            --file ./backend/pom.xml
+            --file ./TP1_docker/backend2/simpleapi/pom.xml
