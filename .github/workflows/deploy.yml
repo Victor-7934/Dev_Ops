@@ -25,8 +25,12 @@ jobs:
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H victor.eymard.takima.school >> ~/.ssh/known_hosts
+
+      - name: Test SSH connection
+        run: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no admin@victor.eymard.takima.school "echo OK"
 
       - name: Run Ansible playbook
         run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml
