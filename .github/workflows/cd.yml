@@ -1,5 +1,5 @@
 name: CD
- 
+
 on:
   workflow_run:
     workflows:
@@ -8,7 +8,7 @@ on:
       - main
     types:
       - completed
- 
+
 jobs:
   push-backend:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -21,10 +21,10 @@ jobs:
       - name: Build image and push backend
         uses: docker/build-push-action@v6
         with:
-          context: ./backend
+          context: ./TP1_docker/backend2/simpleapi
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:latest
           push: true
- 
+
   push-database:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
@@ -36,10 +36,10 @@ jobs:
       - name: Build image and push database
         uses: docker/build-push-action@v6
         with:
-          context: ./database
+          context: ./TP1_docker
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
           push: true
- 
+
   push-httpd:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
@@ -51,34 +51,6 @@ jobs:
       - name: Build image and push httpd
         uses: docker/build-push-action@v6
         with:
-          context: ./httpd
+          context: ./TP1_docker/http
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
           push: true
-
-  deploy:
-    needs: [push-backend, push-database, push-httpd]
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install Ansible
-        run: |
-          pip install ansible
-          pip install docker
-
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-      - name: Run Ansible playbook                                      # ← ici
-        run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml
-        env:
-          ANSIBLE_HOST_KEY_CHECKING: "False"
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
-          BACKEND_PORT: ${{ secrets.BACKEND_PORT }}
