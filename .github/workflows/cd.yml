@@ -36,7 +36,7 @@ jobs:
       - name: Build image and push database
         uses: docker/build-push-action@v6
         with:
-          context: ./TP1_docker
+          context: ./TP1_docker/sql
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
           push: true
 
