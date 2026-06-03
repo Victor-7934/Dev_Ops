@@ -1,0 +1,11 @@
+- name: Create Docker network
+  community.docker.docker_network:
+    name: my-network
+  vars:
+    ansible_python_interpreter: /opt/docker_venv/bin/python
+
+- name: Create proxy network
+  community.docker.docker_network:
+    name: proxy-network
+  vars:
+    ansible_python_interpreter: /opt/docker_venv/bin/python

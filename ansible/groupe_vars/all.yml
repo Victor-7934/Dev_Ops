@@ -1,0 +1,5 @@
+POSTGRES_DB: "{{ lookup('env', 'POSTGRES_DB') }}"
+POSTGRES_USER: "{{ lookup('env', 'POSTGRES_USER') }}"
+POSTGRES_PASSWORD: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+BACKEND_HOST: "{{ lookup('env', 'BACKEND_HOST') }}"
+BACKEND_PORT: "{{ lookup('env', 'BACKEND_PORT') }}"

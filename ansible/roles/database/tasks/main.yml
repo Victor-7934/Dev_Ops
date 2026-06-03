@@ -1,0 +1,12 @@
+- name: Launch database
+  community.docker.docker_container:
+    name: my3tierapp
+    image: victor7934/tp-devops-database:latest
+    networks:
+      - name: my-network
+    env:
+      POSTGRES_DB: "{{ POSTGRES_DB }}"
+      POSTGRES_USER: "{{ POSTGRES_USER }}"
+      POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
+  vars:
+    ansible_python_interpreter: /opt/docker_venv/bin/python

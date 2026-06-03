@@ -1,0 +1,13 @@
+- name: Launch app
+  community.docker.docker_container:
+    name: "{{ BACKEND_HOST }}"
+    image: victor7934/tp-devops-simple-api:latest
+    networks:
+      - name: my-network
+      - name: proxy-network
+    env:
+      POSTGRES_DB: "{{ POSTGRES_DB }}"
+      POSTGRES_USER: "{{ POSTGRES_USER }}"
+      POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
+  vars:
+    ansible_python_interpreter: /opt/docker_venv/bin/python

@@ -1,0 +1,13 @@
+- name: Launch proxy
+  community.docker.docker_container:
+    name: my-httpd
+    image: victor7934/tp-devops-httpd:latest
+    ports:
+      - "80:80"
+    networks:
+      - name: proxy-network
+    env:
+      BACKEND_HOST: "{{ BACKEND_HOST }}"
+      BACKEND_PORT: "{{ BACKEND_PORT }}"
+  vars:
+    ansible_python_interpreter: /opt/docker_venv/bin/python
