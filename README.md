@@ -118,4 +118,4 @@ Dans un pipeline de CI/CD, l'application a besoin d'accéder à des ressources s
 * **Sécurité :** Le pipeline peut appeler ces variables pour s'authentifier, mais l'outil **masque automatiquement leur valeur** dans les logs de console (remplacées par `***`) et évite qu'elles n'apparaissent en clair dans le code source du dépôt, éliminant ainsi tout risque de fuite ou de piratage.
 
 ### 2.3
-csdvsdvsd
+c
