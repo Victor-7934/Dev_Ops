@@ -26,8 +26,8 @@ jobs:
       - name: Build, test and SonarCloud analysis
         run: |
           mvn -B verify sonar:sonar \
-            -Dsonar.projectKey=EmileZ10_DevOps \
-            -Dsonar.organization=emilez10 \
+            -Dsonar.projectKey=Victor-7934_Dev_Ops \
+            -Dsonar.organization=victor-7934\
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             --file ./TP1_docker/backend2/simpleapi/pom.xml
