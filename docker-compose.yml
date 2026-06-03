@@ -47,3 +47,10 @@ networks:
 
 volumes:
   my-db-volume:
+
+  front:
+    build: ./devops-front
+    container_name: front
+    restart: unless-stopped
+    networks:
+      - app-network

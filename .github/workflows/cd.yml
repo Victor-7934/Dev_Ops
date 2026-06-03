@@ -48,3 +48,18 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest ./TP1_docker/http
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
+
+  push-front:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Build image and push front
+        uses: docker/build-push-action@v6
+        with:
+          context: ./devops-front
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-front:latest
+          push: true
