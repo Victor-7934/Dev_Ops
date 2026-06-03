@@ -41,4 +41,4 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           BACKEND_HOST: ${{ secrets.BACKEND_HOST }}
-          BACKEND_PORT: ${{ secrets.BACKEND_PORT }}
+          BACKEND_PORT: ${{ secrets.BACKEND_PORT }} 
