@@ -2,6 +2,7 @@
   community.docker.docker_container:
     name: my-httpd
     image: victor7934/tp-devops-httpd:latest
+    pull: always
     ports:
       - "80:80"
     networks:

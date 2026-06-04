@@ -2,6 +2,7 @@
   community.docker.docker_container:
     name: "{{ BACKEND_HOST }}"
     image: victor7934/tp-devops-simple-api:latest
+    pull: always
     networks:
       - name: my-network
       - name: proxy-network
