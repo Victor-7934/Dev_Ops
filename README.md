@@ -1,6 +1,6 @@
 # DevOps — Compte-Rendu Docker & CI/CD (4A S8)
 
-Ce dépôt contient les réponses, concepts clés et configurations essentielles pour les TP1 et TP2 du module DevOps.
+Ce dépôt contient les réponses, concepts clés et configurations essentielles pour les TP1,TP2 et TP3 du module DevOps.
 
 ---
 
