@@ -135,6 +135,8 @@ Sans publication, chaque machine devrait builder l'image localement, ce qui est 
 
 ---
 
+## TP3 — Discover Ansible
+
 ### 3 — Est-il vraiment sûr de déployer automatiquement chaque nouvelle image sur le hub ? Expliquez pourquoi. Que puis-je faire pour renforcer la sécurité ?
 
 Non, ce n'est pas totalement sûr. Déployer automatiquement chaque nouvelle image présente plusieurs risques :
