@@ -117,5 +117,34 @@ Dans un pipeline de CI/CD, l'application a besoin d'accéder à des ressources s
 * **Le rôle des Secrets :** Ils servent à stocker ces données de manière chiffrée dans la plateforme de CI/CD (ex: *GitHub Actions Secrets*).
 * **Sécurité :** Le pipeline peut appeler ces variables pour s'authentifier, mais l'outil **masque automatiquement leur valeur** dans les logs de console (remplacées par `***`) et évite qu'elles n'apparaissent en clair dans le code source du dépôt, éliminant ainsi tout risque de fuite ou de piratage.
 
-### 2.3
-c
+### 2.3 — Pourquoi avons-nous ajouté la tâche « build-and-test-backend » à ce travail ?
+
+La tâche `build-and-test-backend` est ajoutée au workflow CI pour s'assurer que le code compile correctement et que tous les tests passent avant de continuer. Si on la supprime, des images Docker cassées pourraient être publiées sur DockerHub et déployées en production sans qu'on s'en rende compte. Elle sert de filet de sécurité : pas de déploiement si les tests échouent.
+
+---
+
+### 2.4 — Dans quel but devons-nous publier des images Docker ?
+
+Publier des images Docker sur DockerHub permet de :
+- **Partager** les images entre machines et environnements (local, CI, serveur de production)
+- **Versionner** les builds de l'application
+- **Déployer** facilement sur n'importe quel serveur sans recompiler le code
+- **Centraliser** les artefacts de build pour toute l'équipe
+
+Sans publication, chaque machine devrait builder l'image localement, ce qui est lent, peu fiable et non reproductible.
+
+---
+
+### 3 — Is it really safe to deploy automatically every new image on the hub? Explain. What can I do to make it more secure?
+
+Non, ce n'est pas totalement sûr. Déployer automatiquement chaque nouvelle image présente plusieurs risques :
+- Une image buguée ou malveillante peut être déployée directement en production sans validation humaine
+- Si le compte DockerHub est compromis, un attaquant peut publier une image malveillante qui sera déployée automatiquement
+- L'utilisation du tag `latest` ne permet pas de tracer quelle version exacte est déployée
+
+**Pour sécuriser le déploiement :**
+- Utiliser des **tags versionnés** (`v1.0.0`) plutôt que `latest` pour tracer précisément ce qui est déployé
+- Ajouter des **tests automatiques** (unitaires, d'intégration) avant chaque déploiement
+- Mettre en place une **validation manuelle** avec `environment: production` dans GitHub Actions pour les déploiements en production
+- **Scanner les images** avec des outils comme Trivy ou Snyk pour détecter les vulnérabilités avant le déploiementSonnet 4.6 FaibleClaude est une IA et peut faire des erreurs
+
