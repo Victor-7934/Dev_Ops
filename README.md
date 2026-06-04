@@ -148,5 +148,5 @@ Non, ce n'est pas totalement sûr. Déployer automatiquement chaque nouvelle ima
 - Utiliser des **tags versionnés** (`v1.0.0`) plutôt que `latest` pour tracer précisément ce qui est déployé
 - Ajouter des **tests automatiques** (unitaires, d'intégration) avant chaque déploiement
 - Mettre en place une **validation manuelle** avec `environment: production` dans GitHub Actions pour les déploiements en production
-- **Scanner les images** avec des outils comme Trivy ou Snyk pour détecter les vulnérabilités avant le déploiementSonnet 4.6 FaibleClaude est une IA et peut faire des erreurs
+- **Scanner les images** avec des outils comme Trivy ou Snyk pour détecter les vulnérabilités avant le déploiement
 
