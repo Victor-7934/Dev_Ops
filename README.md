@@ -135,7 +135,7 @@ Sans publication, chaque machine devrait builder l'image localement, ce qui est 
 
 ---
 
-### 3 — Is it really safe to deploy automatically every new image on the hub? Explain. What can I do to make it more secure?
+### 3 — Est-il vraiment sûr de déployer automatiquement chaque nouvelle image sur le hub ? Expliquez pourquoi. Que puis-je faire pour renforcer la sécurité ?
 
 Non, ce n'est pas totalement sûr. Déployer automatiquement chaque nouvelle image présente plusieurs risques :
 - Une image buguée ou malveillante peut être déployée directement en production sans validation humaine
