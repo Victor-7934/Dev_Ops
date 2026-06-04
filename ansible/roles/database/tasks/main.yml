@@ -2,7 +2,7 @@
   community.docker.docker_container:
     name: my3tierapp
     image: victor7934/tp-devops-database:latest
-    pull: always
+    pull: true
     networks:
       - name: my-network
     env:

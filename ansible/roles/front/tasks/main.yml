@@ -2,7 +2,7 @@
   community.docker.docker_container:
     name: front
     image: victor7934/tp-devops-front:latest
-    pull: always
+    pull: true
     networks:
       - name: proxy-network
     
