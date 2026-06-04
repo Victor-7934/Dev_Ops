@@ -60,6 +60,6 @@ jobs:
       - name: Build image and push front
         uses: docker/build-push-action@v6
         with:
-          context: ./devops-front-main
+          context: ./devops-front-main/devops-front-main
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-front:latest
           push: true
